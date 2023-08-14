@@ -1,0 +1,100 @@
+def main():
+    try:
+        bases_validas = set(range(1, 17))
+        opciones_validas = set(range(1, 5))
+
+        print("Sistemas de conversión:")
+        print("1. Decimal")
+        print("2. Hexadecimal")
+        print("3. Octal")
+        print("4. Binario")
+
+        eleccion_sistema = int(input("Selecciona el sistema al que deseas convertir: "))
+        if eleccion_sistema not in opciones_validas:
+            print("Opción de conversión inválida.")
+            return
+
+        numero = int(input("Ingresa un número: "))
+        base = int(input("Ingresa la base en la que se encuentra el número (1-16): "))
+        if base not in bases_validas:
+            print("Base inválida. Debes proporcionar un número entre 1 y 16.")
+            return
+
+        if eleccion_sistema == 1:
+            numero_decimal = convertir_a_decimal(numero, base)
+            print(f"El número {numero} en base {base} que proporcionaste es igual a {numero_decimal} en base 10")
+
+        elif eleccion_sistema == 2:
+            numero_hexadecimal = convertir_a_hexadecimal(numero, base)
+            print(f"El número {numero} en base {base} que proporcionaste es igual a {numero_hexadecimal} en base 16")
+
+        elif eleccion_sistema == 3:
+            numero_octal = convertir_a_octal(numero, base)
+            print(f"El número {numero} en base {base} que proporcionaste es igual a {numero_octal} en base 8")
+
+        elif eleccion_sistema == 4:
+            numero_binario = convertir_a_binario(numero, base)
+            print(f"El número {numero} en base {base} que proporcionaste es igual a {numero_binario} en base 2")
+
+    except ValueError:
+        print("Entrada inválida. Asegúrate de ingresar números válidos.")
+
+def convertir_a_decimal(numero, base):
+    if base < 1 or base > 16:
+        raise ValueError("La base debe estar entre 1 y 16")
+
+    numero_decimal = 0
+    potencia = 0
+
+    while numero > 0:
+        ultimo_digito = numero % 10
+        equivalente_decimal = ultimo_digito * (base ** potencia)
+        numero_decimal += equivalente_decimal
+        potencia += 1
+        numero //= 10
+
+    return numero_decimal
+
+def convertir_a_hexadecimal(numero, base):
+    if base < 1 or base > 16:
+        raise ValueError("La base debe estar entre 1 y 16")
+
+    digitos_hexadecimales = "0123456789ABCDEF"
+    numero_hexadecimal = ""
+
+    while numero > 0:
+        residuo = numero % 16
+        digito_hexadecimal = digitos_hexadecimales[residuo]
+        numero_hexadecimal = digito_hexadecimal + numero_hexadecimal
+        numero //= 16
+
+    return numero_hexadecimal
+
+def convertir_a_octal(numero, base):
+    if base < 1 or base > 16:
+        raise ValueError("La base debe estar entre 1 y 16")
+
+    numero_octal = ""
+
+    while numero > 0:
+        digito = numero % 8
+        numero_octal = str(digito) + numero_octal
+        numero //= 8
+
+    return numero_octal
+
+def convertir_a_binario(numero, base):
+    if base < 1 or base > 16:
+        raise ValueError("La base debe estar entre 1 y 16")
+
+    numero_binario = ""
+
+    while numero > 0:
+        digito = numero % 2
+        numero_binario = str(digito) + numero_binario
+        numero //= 2
+
+    return numero_binario
+
+if __name__ == "__main__":
+    main()
